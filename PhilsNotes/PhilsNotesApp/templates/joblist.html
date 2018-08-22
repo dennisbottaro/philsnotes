@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Job List</h1>
+<table class="table">
+    <thead>
+        <th>Job Name</th>
+        <th align="right"><a href="/jobadd"><i class="fas fa-plus"></i> Add Job</a></th>
+    </thead>
+{% for job in jobs %}
+    <tr>
+        <td><a href="/jobnotes/{{ job.id }}/">{{ job.job_name }}</a></td>
+        <td align="right">
+            <a href="/jobedit/{{ job.id }}"><i class="fas fa-edit"></i></a>
+            <a href="/jobdelete/{{ job.id }}"><i class="fas fa-trash"></i></a>            
+        </td>
+    </tr>
+    
+{% endfor %}
+</table>
+
+{% endblock %}

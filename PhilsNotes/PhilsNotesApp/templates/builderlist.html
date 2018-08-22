@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Builders</h1>
+<table class="table">
+    <thead>
+        <th>Builder</th>
+        <th align="right"><a href="/builderadd"><i class="fas fa-plus"></i> Add Builder</a></th>
+    </thead>
+{% for builder in builders %}
+    <tr>
+        <td>{{ builder }}</td>
+        <td align="right">
+            <a href="/builderedit/{{ builder.id }}"><i class="fas fa-edit"></i></a>
+            <a href="/builderdelete/{{ builder.id }}"><i class="fas fa-trash"></i></a>
+        </td>
+    </tr>
+    
+{% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block scripts %}
+
+  $( function() {
+    $( "#id_note_date" ).datepicker();
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd = '0'+dd
+    }
+
+    if(mm<10) {
+        mm = '0'+mm
+    }
+
+    today = mm + '/' + dd + '/' + yyyy;
+
+
+    $( "#id_note_date" ).val(today);
+
+  } );
+
+{% endblock %}
+
+{% block content %}
+<h1>Notes: {{ job.job_name }}</h1>
+<hr>
+<form method="post" action="savenote/">
+    {% csrf_token %}
+
+    {% for hidden_field in noteform.hidden_fields %}
+      {{ hidden_field }}
+    {% endfor %}
+  
+    {% for field in noteform.visible_fields %}
+      <div class="form-group">
+        {{ field.label_tag }}
+        {% render_field field class="form-control" %}
+        {% if field.help_text %}
+          <small class="form-text text-muted">{{ field.help_text }}</small>
+        {% endif %}
+      </div>
+    {% endfor %}
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <table class="table table-striped">
+      <thead>
+          <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Note</th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for note in jobnotes %}
+        <tr>
+            <td>{{ note.note_date }}</td>
+            <td>{{ note.note_text }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}
